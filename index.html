@@ -34,6 +34,8 @@ input,textarea{font:inherit}
 .field input{width:100%;background:#fff;border:1px solid var(--line-2);border-radius:9px;padding:.62rem .7rem;color:var(--ink);font-size:16px;outline:none}
 .field input:focus{border-color:var(--accent)}
 .field .hint{font-size:.72rem;color:var(--faint);margin-top:4px}
+/* 令牌框用星号遮罩但不是 password 类型，避免浏览器把它当登录密码反复弹「保存密码」 */
+.masked{-webkit-text-security:disc;text-security:disc;font-family:var(--mono)}
 
 /* header */
 header{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;
@@ -125,10 +127,10 @@ main{max-width:940px;margin:0 auto;padding:1rem calc(1rem + var(--sar)) calc(3re
   <div class="box">
     <h1>📦 暂存库存</h1>
     <p class="lede">记录你暂时放在各处房子的物品（地址 · 物品 · 数量 · 图片）。数据存在你私有仓库的 <span class="mono">storage.json</span>，仅本机保存令牌。若已在导航站配过，下面会自动带出，直接点连接即可。</p>
-    <div class="field"><label>仓库 Owner</label><input id="gOwner" placeholder="NickkkLian" autocapitalize="off" autocorrect="off"></div>
-    <div class="field"><label>私有仓库名</label><input id="gRepo" placeholder="Database" autocapitalize="off" autocorrect="off"></div>
-    <div class="field"><label>文件路径</label><input id="gPath" value="storage.json" autocapitalize="off" autocorrect="off"></div>
-    <div class="field"><label>Fine-grained Token（Contents 读写）</label><input id="gToken" type="password" placeholder="github_pat_…" autocapitalize="off" autocorrect="off"><div class="hint">仅存本机浏览器，不上传、不进代码。</div></div>
+    <div class="field"><label>仓库 Owner</label><input id="gOwner" placeholder="NickkkLian" autocomplete="off" autocapitalize="off" autocorrect="off"></div>
+    <div class="field"><label>私有仓库名</label><input id="gRepo" placeholder="Database" autocomplete="off" autocapitalize="off" autocorrect="off"></div>
+    <div class="field"><label>文件路径</label><input id="gPath" value="storage.json" autocomplete="off" autocapitalize="off" autocorrect="off"></div>
+    <div class="field"><label>Fine-grained Token（Contents 读写）</label><input id="gToken" type="text" class="masked" name="pha-token-nosave" placeholder="github_pat_…" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><div class="hint">仅存本机浏览器，不上传、不进代码。</div></div>
     <button class="btn primary" id="gConnect" style="width:100%;justify-content:center;margin-top:.4rem">连接并载入</button>
     <p class="st mono" id="gStat" style="margin-top:.6rem;font-size:11px;color:var(--soft)"></p>
   </div>
