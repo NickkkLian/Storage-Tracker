@@ -241,7 +241,16 @@ async function ghLoad(){
   if(r.status===401||r.status===403)throw new Error("令牌无权限或无效（"+r.status+"）");
   if(!r.ok)throw new Error("HTTP "+r.status);
   const j=await r.json();fileSha=j.sha;
-  return normalize(JSON.parse(b64decode(j.content)));
+  // Contents API 对 >1MB 的文件不内联返回 content（变空）→ 改用 Blob API 按 sha 取（支持到 100MB）
+  let text="";
+  if(j.content&&j.content.replace(/\s/g,"")) text=b64decode(j.content);
+  else if(j.sha){
+    const br=await fetch(`https://api.github.com/repos/${cfg.owner}/${cfg.repo}/git/blobs/${j.sha}`,{headers:ghHeaders()});
+    if(!br.ok)throw new Error("读取大文件失败 HTTP "+br.status);
+    const bj=await br.json();text=b64decode(bj.content||"");
+  }
+  if(!text.trim())return {version:1,updatedAt:null,addresses:[]};
+  return normalize(JSON.parse(text));
 }
 async function ghSave(){
   data.updatedAt=new Date().toISOString();
