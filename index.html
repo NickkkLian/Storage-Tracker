@@ -125,13 +125,13 @@ main{max-width:940px;margin:0 auto;padding:1rem calc(1rem + var(--sar)) calc(3re
 <!-- 连接设置 -->
 <div class="gate" id="gate">
   <div class="box">
-    <h1>📦 暂存库存</h1>
-    <p class="lede">记录你暂时放在各处房子的物品（地址 · 物品 · 数量 · 图片）。数据存在你私有仓库的 <span class="mono">storage.json</span>，仅本机保存令牌。若已在导航站配过，下面会自动带出，直接点连接即可。</p>
-    <div class="field"><label>仓库 Owner</label><input id="gOwner" placeholder="NickkkLian" autocomplete="off" autocapitalize="off" autocorrect="off"></div>
-    <div class="field"><label>私有仓库名</label><input id="gRepo" placeholder="Database" autocomplete="off" autocapitalize="off" autocorrect="off"></div>
-    <div class="field"><label>文件路径</label><input id="gPath" value="storage.json" autocomplete="off" autocapitalize="off" autocorrect="off"></div>
-    <div class="field"><label>Fine-grained Token（Contents 读写）</label><input id="gToken" type="text" class="masked" name="pha-token-nosave" placeholder="github_pat_…" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><div class="hint">仅存本机浏览器，不上传、不进代码。</div></div>
-    <button class="btn primary" id="gConnect" style="width:100%;justify-content:center;margin-top:.4rem">连接并载入</button>
+    <h1 data-i18n="gateTitle">📦 暂存库存</h1>
+    <p class="lede" data-i18n="gateLede">记录你暂时放在各处房子的物品（地址 · 物品 · 数量 · 图片）。数据存在你私有仓库的 storage.json，仅本机保存令牌。若已在导航站配过，下面会自动带出，直接点连接即可。</p>
+    <div class="field"><label data-i18n="lblOwner">仓库 Owner</label><input id="gOwner" placeholder="NickkkLian" autocomplete="off" autocapitalize="off" autocorrect="off"></div>
+    <div class="field"><label data-i18n="lblRepo">私有仓库名</label><input id="gRepo" placeholder="Database" autocomplete="off" autocapitalize="off" autocorrect="off"></div>
+    <div class="field"><label data-i18n="lblPath">文件路径</label><input id="gPath" value="storage.json" autocomplete="off" autocapitalize="off" autocorrect="off"></div>
+    <div class="field"><label data-i18n="lblToken">Fine-grained Token（Contents 读写）</label><input id="gToken" type="text" class="masked" name="pha-token-nosave" placeholder="github_pat_…" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><div class="hint" data-i18n="tokenHint">仅存本机浏览器，不上传、不进代码。</div></div>
+    <button class="btn primary" id="gConnect" data-i18n="connectBtn" style="width:100%;justify-content:center;margin-top:.4rem">连接并载入</button>
     <p class="st mono" id="gStat" style="margin-top:.6rem;font-size:11px;color:var(--soft)"></p>
   </div>
 </div>
@@ -139,27 +139,28 @@ main{max-width:940px;margin:0 auto;padding:1rem calc(1rem + var(--sar)) calc(3re
 <!-- 应用 -->
 <div id="app" class="hidden">
   <header>
-    <span class="brand"><span class="ico">📦</span> 暂存库存</span>
+    <span class="brand"><span class="ico">📦</span> <span data-i18n="appName">暂存库存</span></span>
     <span class="grow"></span>
     <span class="pill"><span class="dot" id="dot"></span><span id="sync">本地</span></span>
+    <button class="btn sm ghost" id="langBtn">EN</button>
     <button class="btn sm ghost" id="reload">↻</button>
     <button class="btn sm ghost" id="settings">⚙</button>
   </header>
 
   <main>
     <div class="toolbar">
-      <input class="search" id="search" placeholder="搜地址 / 物品 / 备注…">
-      <button class="btn primary" id="addAddr">+ 新增存放点</button>
+      <input class="search" id="search" data-i18n-ph="searchPh" placeholder="搜地址 / 物品 / 备注…">
+      <button class="btn primary" id="addAddr" data-i18n="addAddr">+ 新增存放点</button>
     </div>
     <div class="summary" id="summary"></div>
     <div id="list"></div>
   </main>
 
   <div class="savebar">
-    <button class="btn primary" id="save">保存到 GitHub</button>
+    <button class="btn primary" id="save" data-i18n="saveBtn">保存到 GitHub</button>
     <span class="st" id="saveSt"></span>
     <span class="grow"></span>
-    <span class="st">改动会自动暂存本机</span>
+    <span class="st" data-i18n="autoCache">改动会自动暂存本机</span>
   </div>
 </div>
 
@@ -167,13 +168,13 @@ main{max-width:940px;margin:0 auto;padding:1rem calc(1rem + var(--sar)) calc(3re
 <div class="overlay" id="addrModal">
   <div class="modal">
     <h2 id="addrTitle">存放点</h2>
-    <div class="field"><label>地址 / 名称</label><input id="aName" placeholder="如：上海·徐汇老房 / 父母家储藏间"></div>
-    <div class="field"><label>备注（可选）</label><textarea id="aNote" placeholder="楼层、房间、联系人…"></textarea></div>
+    <div class="field"><label data-i18n="lblAddrName">地址 / 名称</label><input id="aName" data-i18n-ph="aNamePh" placeholder="如：上海·徐汇老房 / 父母家储藏间"></div>
+    <div class="field"><label data-i18n="lblNote">备注（可选）</label><textarea id="aNote" data-i18n-ph="aNotePh" placeholder="楼层、房间、联系人…"></textarea></div>
     <div class="modal-foot">
-      <button class="btn danger" id="aDelete">删除</button>
+      <button class="btn danger" id="aDelete" data-i18n="del">删除</button>
       <span class="grow"></span>
-      <button class="btn" id="aCancel">取消</button>
-      <button class="btn primary" id="aSave">保存</button>
+      <button class="btn" id="aCancel" data-i18n="cancel">取消</button>
+      <button class="btn primary" id="aSave" data-i18n="save">保存</button>
     </div>
   </div>
 </div>
@@ -182,18 +183,18 @@ main{max-width:940px;margin:0 auto;padding:1rem calc(1rem + var(--sar)) calc(3re
 <div class="overlay" id="itemModal">
   <div class="modal">
     <h2 id="itemTitle">物品</h2>
-    <div class="field"><label>物品名称</label><input id="iName" placeholder="如：冬被 / 投影仪 / 纸箱A"></div>
-    <div class="field"><label>数量</label><input id="iQty" type="number" min="0" step="1" placeholder="1"></div>
-    <div class="field"><label>备注（可选）</label><textarea id="iNote" placeholder="型号、状态、何时取回…"></textarea></div>
-    <div class="field"><label>图片（最多 3 张）</label>
+    <div class="field"><label data-i18n="lblItemName">物品名称</label><input id="iName" data-i18n-ph="iNamePh" placeholder="如：冬被 / 投影仪 / 纸箱A"></div>
+    <div class="field"><label data-i18n="lblQty">数量</label><input id="iQty" type="number" min="0" step="1" placeholder="1"></div>
+    <div class="field"><label data-i18n="lblNote">备注（可选）</label><textarea id="iNote" data-i18n-ph="iNotePh" placeholder="型号、状态、何时取回…"></textarea></div>
+    <div class="field"><label data-i18n="lblImages">图片（最多 3 张）</label>
       <div class="imgs" id="iImgs"></div>
       <input type="file" id="iFile" accept="image/*" multiple class="hidden">
     </div>
     <div class="modal-foot">
-      <button class="btn danger" id="iDelete">删除</button>
+      <button class="btn danger" id="iDelete" data-i18n="del">删除</button>
       <span class="grow"></span>
-      <button class="btn" id="iCancel">取消</button>
-      <button class="btn primary" id="iSave">保存</button>
+      <button class="btn" id="iCancel" data-i18n="cancel">取消</button>
+      <button class="btn primary" id="iSave" data-i18n="save">保存</button>
     </div>
   </div>
 </div>
@@ -206,6 +207,76 @@ main{max-width:940px;margin:0 auto;padding:1rem calc(1rem + var(--sar)) calc(3re
 const $=s=>document.querySelector(s);
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
 const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+/* ---- 中英双语（与导航站共享 pha-lang）；专有名词/品牌保留不译 ---- */
+const I18N={
+  gateTitle:{zh:"📦 暂存库存",en:"📦 Stash"},
+  gateLede:{zh:"记录你暂时放在各处房子的物品（地址 · 物品 · 数量 · 图片）。数据存在你私有仓库的 storage.json，仅本机保存令牌。若已在导航站配过，下面会自动带出，直接点连接即可。",en:"Track items you've temporarily left at different homes (place · item · quantity · photos). Data lives in storage.json in your private repo; the token stays on this device. If you set it up in the Hub, the fields below auto-fill — just hit Connect."},
+  lblOwner:{zh:"仓库 Owner",en:"Repo Owner"},
+  lblRepo:{zh:"私有仓库名",en:"Private repo"},
+  lblPath:{zh:"文件路径",en:"File path"},
+  lblToken:{zh:"Fine-grained Token（Contents 读写）",en:"Fine-grained Token (Contents R/W)"},
+  tokenHint:{zh:"仅存本机浏览器，不上传、不进代码。",en:"Stored in this browser only — never uploaded or committed."},
+  connectBtn:{zh:"连接并载入",en:"Connect & load"},
+  appName:{zh:"暂存库存",en:"Stash"},
+  searchPh:{zh:"搜地址 / 物品 / 备注…",en:"Search place / item / note…"},
+  addAddr:{zh:"+ 新增存放点",en:"+ New place"},
+  saveBtn:{zh:"保存到 GitHub",en:"Save to GitHub"},
+  autoCache:{zh:"改动会自动暂存本机",en:"Changes auto-saved locally"},
+  lblAddrName:{zh:"地址 / 名称",en:"Address / name"},
+  lblNote:{zh:"备注（可选）",en:"Note (optional)"},
+  aNamePh:{zh:"如：上海·徐汇老房 / 父母家储藏间",en:"e.g. Old flat · Shanghai / parents' storeroom"},
+  aNotePh:{zh:"楼层、房间、联系人…",en:"Floor, room, contact…"},
+  lblItemName:{zh:"物品名称",en:"Item name"},
+  iNamePh:{zh:"如：冬被 / 投影仪 / 纸箱A",en:"e.g. winter quilt / projector / box A"},
+  lblQty:{zh:"数量",en:"Quantity"},
+  iNotePh:{zh:"型号、状态、何时取回…",en:"Model, condition, when to retrieve…"},
+  lblImages:{zh:"图片（最多 3 张）",en:"Photos (up to 3)"},
+  del:{zh:"删除",en:"Delete"},
+  cancel:{zh:"取消",en:"Cancel"},
+  save:{zh:"保存",en:"Save"},
+  // 动态
+  newPlace:{zh:"新增存放点",en:"New place"},
+  editPlace:{zh:"编辑存放点",en:"Edit place"},
+  addItem:{zh:"添加物品",en:"Add item"},
+  editItem:{zh:"编辑物品",en:"Edit item"},
+  editBtn:{zh:"编辑",en:"Edit"},
+  addItemBtn:{zh:"+ 添加物品",en:"+ Add item"},
+  unnamedPlace:{zh:"未命名存放点",en:"Unnamed place"},
+  unnamed:{zh:"未命名",en:"Unnamed"},
+  syncLocal:{zh:"本地",en:"Local"},
+  syncSynced:{zh:"已同步",en:"Synced"},
+  syncUnsaved:{zh:"未保存",en:"Unsaved"},
+  syncSaving:{zh:"保存中…",en:"Saving…"},
+  syncLoading:{zh:"载入中…",en:"Loading…"},
+  syncOffline:{zh:"离线·本地缓存",en:"Offline · cached"},
+  syncCache:{zh:"本地缓存",en:"Cached"},
+  syncSaveFail:{zh:"保存失败",en:"Save failed"},
+  syncLoadFail:{zh:"载入失败",en:"Load failed"},
+  saved:{zh:"已保存 ✓",en:"Saved ✓"},
+  connecting:{zh:"连接中…",en:"Connecting…"},
+  fillFields:{zh:"请填 Owner / Repo / Token",en:"Fill Owner / Repo / Token"},
+  loadFailMsg:{zh:"载入失败：",en:"Load failed: "},
+  loadFailCache:{zh:"载入失败，显示本地缓存：",en:"Load failed, showing cache: "},
+  saveFailMsg:{zh:"保存失败：",en:"Save failed: "},
+  notConfigSave:{zh:"未配置，无法保存",en:"Not configured — can't save"},
+  savedGh:{zh:"已保存到 GitHub ✓",en:"Saved to GitHub ✓"},
+  reloaded:{zh:"已重新载入",en:"Reloaded"},
+  imgFail:{zh:"图片处理失败",en:"Image processing failed"},
+  fillAddr:{zh:"填一下地址/名称",en:"Enter an address / name"},
+  fillItem:{zh:"填一下物品名称",en:"Enter an item name"},
+  confirmReload:{zh:"有未保存改动，重新载入会丢弃，继续？",en:"Unsaved changes will be discarded on reload. Continue?"},
+};
+let lang=(()=>{try{return localStorage.getItem("pha-lang")==="en"?"en":"zh"}catch(e){return "zh"}})();
+const L=k=>(I18N[k]||{zh:k,en:k})[lang];
+function applyStatic(){
+  document.querySelectorAll("[data-i18n]").forEach(el=>{const k=el.dataset.i18n;if(I18N[k])el.textContent=I18N[k][lang]});
+  document.querySelectorAll("[data-i18n-ph]").forEach(el=>{const k=el.dataset.i18nPh;if(I18N[k])el.placeholder=I18N[k][lang]});
+  const lb=$("#langBtn");if(lb)lb.textContent=lang==="zh"?"EN":"中";
+  const sy=$("#sync");if(sy&&I18N[syncKey])sy.textContent=I18N[syncKey][lang];
+  document.documentElement.lang=lang==="zh"?"zh-CN":"en";
+}
+function setLang(l){lang=l;try{localStorage.setItem("pha-lang",l)}catch(e){}applyStatic();render();}
 
 /* 存储兜底（预览环境可能禁用 localStorage） */
 const mem={};
@@ -280,34 +351,35 @@ function normalize(p){
 /* ---- 缓存 ---- */
 function cacheSave(){store.set(CACHE_KEY,JSON.stringify({cfgKey:cfg.owner+"/"+cfg.repo+"/"+cfg.path,data}))}
 function cacheLoad(){try{const c=JSON.parse(store.get(CACHE_KEY)||"null");if(c&&c.cfgKey===cfg.owner+"/"+cfg.repo+"/"+cfg.path)return c.data}catch(e){}return null}
-function markDirty(){dirty=true;cacheSave();setSync("local","未保存");scheduleSave()}
+function markDirty(){dirty=true;cacheSave();setSync("local","syncUnsaved");scheduleSave()}
 function scheduleSave(){clearTimeout(saveTimer);saveTimer=setTimeout(()=>{if(configured()&&dirty)doSave(true)},2500)}
 
 /* ---- 状态 ---- */
-function setSync(kind,text){$("#dot").className="dot"+(kind==="ok"?" ok":kind==="busy"?" busy":kind==="err"?" err":"");$("#sync").textContent=text}
+let syncKey="syncLocal";
+function setSync(kind,key){syncKey=key;$("#dot").className="dot"+(kind==="ok"?" ok":kind==="busy"?" busy":kind==="err"?" err":"");$("#sync").textContent=I18N[key]?I18N[key][lang]:key}
 function toast(msg,err){const t=$("#toast");t.textContent=msg;t.className="show"+(err?" err":"");setTimeout(()=>t.className=t.className.replace("show","").trim(),2200)}
 
 /* ---- 连接 / 载入 ---- */
 function fillGate(){$("#gOwner").value=cfg.owner;$("#gRepo").value=cfg.repo;$("#gPath").value=cfg.path||"storage.json";$("#gToken").value=cfg.token}
 async function connect(){
   cfg.owner=$("#gOwner").value.trim();cfg.repo=$("#gRepo").value.trim();cfg.path=$("#gPath").value.trim()||"storage.json";cfg.token=$("#gToken").value.trim();
-  if(!configured()){$("#gStat").textContent="请填 Owner / Repo / Token";return}
-  saveCfg();$("#gStat").textContent="连接中…";
+  if(!configured()){$("#gStat").textContent=L("fillFields");return}
+  saveCfg();$("#gStat").textContent=L("connecting");
   try{
     data=await ghLoad();dirty=false;cacheSave();
     $("#gate").classList.add("hidden");$("#app").classList.remove("hidden");
-    setSync("ok","已同步");render();toast("已载入 "+itemCount()+" 件物品");
+    setSync("ok","syncSynced");render();toast(lang==="zh"?("已载入 "+itemCount()+" 件物品"):("Loaded "+itemCount()+" items"));
   }catch(e){
     const cached=cacheLoad();
-    if(cached){data=cached;$("#gate").classList.add("hidden");$("#app").classList.remove("hidden");setSync("err","离线·本地缓存");render();toast("载入失败，显示本地缓存："+e.message,true)}
-    else $("#gStat").textContent="载入失败："+e.message;
+    if(cached){data=cached;$("#gate").classList.add("hidden");$("#app").classList.remove("hidden");setSync("err","syncOffline");render();toast(L("loadFailCache")+e.message,true)}
+    else $("#gStat").textContent=L("loadFailMsg")+e.message;
   }
 }
 async function doSave(silent){
-  if(!configured()){toast("未配置，无法保存",true);return}
-  setSync("busy","保存中…");$("#save").disabled=true;$("#saveSt").textContent="保存中…";
-  try{await ghSave();dirty=false;cacheSave();setSync("ok","已同步");$("#saveSt").textContent="已保存 ✓";if(!silent)toast("已保存到 GitHub ✓")}
-  catch(e){setSync("err","保存失败");$("#saveSt").textContent="";toast("保存失败："+e.message,true)}
+  if(!configured()){toast(L("notConfigSave"),true);return}
+  setSync("busy","syncSaving");$("#save").disabled=true;$("#saveSt").textContent=L("syncSaving");
+  try{await ghSave();dirty=false;cacheSave();setSync("ok","syncSynced");$("#saveSt").textContent=L("saved");if(!silent)toast(L("savedGh"))}
+  catch(e){setSync("err","syncSaveFail");$("#saveSt").textContent="";toast(L("saveFailMsg")+e.message,true)}
   finally{$("#save").disabled=false}
 }
 
@@ -319,22 +391,24 @@ function totalQty(){return data.addresses.reduce((a,x)=>a+x.items.reduce((s,it)=
 function matchAddr(a){if(!q)return true;const hay=(a.address+" "+a.note+" "+a.items.map(it=>it.name+" "+it.note).join(" ")).toLowerCase();return hay.includes(q)}
 function render(){
   const list=$("#list");
-  $("#summary").textContent=`${data.addresses.length} 个存放点 · ${itemCount()} 件物品 · 合计数量 ${totalQty()}`;
+  $("#summary").textContent=lang==="zh"
+    ?`${data.addresses.length} 个存放点 · ${itemCount()} 件物品 · 合计数量 ${totalQty()}`
+    :`${data.addresses.length} place(s) · ${itemCount()} item(s) · total qty ${totalQty()}`;
   const addrs=data.addresses.filter(matchAddr);
-  if(!data.addresses.length){list.innerHTML=`<div class="empty">还没有存放点。<br>点右上「+ 新增存放点」开始记录。</div>`;return}
-  if(!addrs.length){list.innerHTML=`<div class="empty">没有匹配「${esc(q)}」的结果。</div>`;return}
+  if(!data.addresses.length){list.innerHTML=`<div class="empty">${lang==="zh"?'还没有存放点。<br>点右上「+ 新增存放点」开始记录。':'No places yet.<br>Tap “+ New place” at the top to start.'}</div>`;return}
+  if(!addrs.length){list.innerHTML=`<div class="empty">${lang==="zh"?`没有匹配「${esc(q)}」的结果。`:`No results for “${esc(q)}”.`}</div>`;return}
   list.innerHTML=addrs.map(a=>`
     <div class="addr" data-a="${a.id}">
       <div class="addr-hd">
-        <span class="nm">📍 ${esc(a.address||"未命名存放点")}</span>
-        <span class="ct">${a.items.length} 件</span>
-        <button class="btn sm ghost" data-editaddr="${a.id}">编辑</button>
+        <span class="nm">📍 ${esc(a.address||L("unnamedPlace"))}</span>
+        <span class="ct">${a.items.length}${lang==="zh"?" 件":" items"}</span>
+        <button class="btn sm ghost" data-editaddr="${a.id}">${L("editBtn")}</button>
       </div>
       <div class="addr-body">
         ${a.note?`<div class="item nt" style="border:none;background:none;padding:0 0 .6rem;color:var(--soft);font-size:.82rem">📝 ${esc(a.note)}</div>`:""}
         <div class="items">
           ${a.items.map(it=>itemCardHTML(a.id,it)).join("")}
-          <button class="item-add" data-additem="${a.id}">+ 添加物品</button>
+          <button class="item-add" data-additem="${a.id}">${L("addItemBtn")}</button>
         </div>
       </div>
     </div>`).join("");
@@ -346,10 +420,10 @@ function render(){
 function itemCardHTML(aid,it){
   return `<div class="item">
     ${it.images.length?`<div class="thumbs">${it.images.map(src=>`<img data-zoom="${src}" src="${src}" alt="">`).join("")}</div>`:""}
-    <div class="nm">${esc(it.name||"未命名")}</div>
+    <div class="nm">${esc(it.name||L("unnamed"))}</div>
     <div class="qty">× ${it.qty||0}</div>
     ${it.note?`<div class="nt">${esc(it.note)}</div>`:""}
-    <div class="row"><button class="btn sm ghost" data-edititem="${it.id}" data-aid="${aid}">编辑</button></div>
+    <div class="row"><button class="btn sm ghost" data-edititem="${it.id}" data-aid="${aid}">${L("editBtn")}</button></div>
   </div>`;
 }
 
@@ -357,21 +431,21 @@ function itemCardHTML(aid,it){
 let editAddrId=null;
 function openAddr(id){
   editAddrId=id;const a=id?data.addresses.find(x=>x.id===id):null;
-  $("#addrTitle").textContent=a?"编辑存放点":"新增存放点";
+  $("#addrTitle").textContent=a?L("editPlace"):L("newPlace");
   $("#aName").value=a?a.address:"";$("#aNote").value=a?a.note:"";
   $("#aDelete").style.display=a?"":"none";
   $("#addrModal").classList.add("open");$("#aName").focus();
 }
 $("#aCancel").onclick=()=>$("#addrModal").classList.remove("open");
 $("#aSave").onclick=()=>{
-  const name=$("#aName").value.trim();if(!name){toast("填一下地址/名称",true);return}
+  const name=$("#aName").value.trim();if(!name){toast(L("fillAddr"),true);return}
   if(editAddrId){const a=data.addresses.find(x=>x.id===editAddrId);a.address=name;a.note=$("#aNote").value.trim()}
   else data.addresses.unshift({id:uid(),address:name,note:$("#aNote").value.trim(),items:[]});
   markDirty();$("#addrModal").classList.remove("open");render();
 };
 $("#aDelete").onclick=()=>{
   if(!editAddrId)return;const a=data.addresses.find(x=>x.id===editAddrId);
-  if(!confirm(`删除存放点「${a.address}」及其 ${a.items.length} 件物品？`))return;
+  if(!confirm(lang==="zh"?`删除存放点「${a.address}」及其 ${a.items.length} 件物品？`:`Delete place “${a.address}” and its ${a.items.length} item(s)?`))return;
   data.addresses=data.addresses.filter(x=>x.id!==editAddrId);markDirty();$("#addrModal").classList.remove("open");render();
 };
 
@@ -380,7 +454,7 @@ let editAid=null,editItemId=null,workImages=[];
 function openItem(aid,itemId){
   editAid=aid;editItemId=itemId;
   const it=itemId?data.addresses.find(x=>x.id===aid).items.find(i=>i.id===itemId):null;
-  $("#itemTitle").textContent=it?"编辑物品":"添加物品";
+  $("#itemTitle").textContent=it?L("editItem"):L("addItem");
   $("#iName").value=it?it.name:"";$("#iQty").value=it?(it.qty||0):1;$("#iNote").value=it?it.note:"";
   workImages=it?it.images.slice():[];renderWorkImages();
   $("#iDelete").style.display=it?"":"none";
@@ -397,7 +471,7 @@ $("#iFile").onchange=async e=>{
   const files=[...e.target.files].slice(0,3-workImages.length);
   for(const f of files){
     if(workImages.length>=3)break;
-    try{workImages.push(await compressImage(f));renderWorkImages()}catch(err){toast("图片处理失败",true)}
+    try{workImages.push(await compressImage(f));renderWorkImages()}catch(err){toast(L("imgFail"),true)}
   }
   e.target.value="";
 };
@@ -415,7 +489,7 @@ function compressImage(file,maxDim=1100,quality=0.72){
 }
 $("#iCancel").onclick=()=>$("#itemModal").classList.remove("open");
 $("#iSave").onclick=()=>{
-  const name=$("#iName").value.trim();if(!name){toast("填一下物品名称",true);return}
+  const name=$("#iName").value.trim();if(!name){toast(L("fillItem"),true);return}
   const qty=Math.max(0,parseInt($("#iQty").value)||0),note=$("#iNote").value.trim();
   const addr=data.addresses.find(x=>x.id===editAid);if(!addr)return;
   if(editItemId){const it=addr.items.find(i=>i.id===editItemId);it.name=name;it.qty=qty;it.note=note;it.images=workImages.slice(0,3)}
@@ -425,7 +499,7 @@ $("#iSave").onclick=()=>{
 $("#iDelete").onclick=()=>{
   if(!editItemId)return;const addr=data.addresses.find(x=>x.id===editAid);
   const it=addr.items.find(i=>i.id===editItemId);
-  if(!confirm(`删除物品「${it.name}」？`))return;
+  if(!confirm(lang==="zh"?`删除物品「${it.name}」？`:`Delete item “${it.name}”?`))return;
   addr.items=addr.items.filter(i=>i.id!==editItemId);markDirty();$("#itemModal").classList.remove("open");render();
 };
 
@@ -433,20 +507,22 @@ $("#iDelete").onclick=()=>{
 $("#addAddr").onclick=()=>openAddr(null);
 $("#search").oninput=e=>{q=e.target.value.trim().toLowerCase();render()};
 $("#save").onclick=()=>doSave(false);
-$("#reload").onclick=async()=>{if(dirty&&!confirm("有未保存改动，重新载入会丢弃，继续？"))return;setSync("busy","载入中…");try{data=await ghLoad();dirty=false;cacheSave();setSync("ok","已同步");render();toast("已重新载入")}catch(e){setSync("err","载入失败");toast("载入失败："+e.message,true)}};
+$("#reload").onclick=async()=>{if(dirty&&!confirm(L("confirmReload")))return;setSync("busy","syncLoading");try{data=await ghLoad();dirty=false;cacheSave();setSync("ok","syncSynced");render();toast(L("reloaded"))}catch(e){setSync("err","syncLoadFail");toast(L("loadFailMsg")+e.message,true)}};
 $("#settings").onclick=()=>{fillGate();$("#app").classList.add("hidden");$("#gate").classList.remove("hidden");$("#gStat").textContent=""};
 $("#gConnect").onclick=connect;
+$("#langBtn").onclick=()=>setLang(lang==="zh"?"en":"zh");
 $("#lightbox").onclick=()=>$("#lightbox").classList.remove("open");
 [ "addrModal","itemModal" ].forEach(id=>$("#"+id).addEventListener("click",e=>{if(e.target.id===id)$("#"+id).classList.remove("open")}));
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){["addrModal","itemModal"].forEach(id=>$("#"+id).classList.remove("open"));$("#lightbox").classList.remove("open")}});
 
 /* ---- 启动 ---- */
 (function boot(){
+  applyStatic();
   fillGate();
   const cached=cacheLoad();if(cached)data=cached;
   if(configured()){
     $("#gate").classList.add("hidden");$("#app").classList.remove("hidden");
-    if(cached){render();setSync("ok","本地缓存")}
+    if(cached){render();setSync("ok","syncCache")}
     connect();
   }
 })();
